@@ -40,11 +40,7 @@ int check_piece_overlap(struct piece current) {
   for (int y = 0; y < 4; y++) {
     for (int x = 0; x < 4; x++) {
         if (tetris[current.piece][current.rotation][y][x] &&
-          (current.position.y - y >= 22 ||
-           current.position.y - y < 0 ||
-           current.position.x + x >= 10 ||
-           current.position.x + x < 0 ||
-           gameScreen[current.position.y - y][current.position.x + x]))
+          (current.position.y - y > 12))
         return 0;
     }
   }
