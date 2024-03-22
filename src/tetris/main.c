@@ -39,8 +39,9 @@ int check_piece_overlap(struct piece current) {
   for (int y = 0; y < 4; y++) {
     for (int x = 0; x < 4; x++) {
       if (tetris[current.piece][current.rotation][y][x] && (
-        (current.position.y - y > 20) || (current.position.y - y < 0) ||
+        (current.position.y - y > 21) || (current.position.y - y < 0) ||
         (current.position.x + x < 0) || (current.position.x + x >= 10)
+        // || (gameScreen[current.position.y + 1][current.position.x + x])
         // || (gameScreen[current.position.y - y][current.position.x + x])
         )
         )
@@ -106,13 +107,15 @@ void moveRight(struct piece* current) {
   }
 }
 
-void moveDown(struct piece* current) {
-  if (check_piece_overlap(*current)) {  // check
+void moveDown(struct piece* current, struct piece* next) {
     removeCurrentPiece(*current);
     current->position.y += 1;
-    // gameScreen[current->position.y - 1][current->position.x] = 0;
-    wrefresh(gameWindow);
+  if (!check_piece_overlap(*current)) {  // check
+    current->position.y -= 1;
+    // current = next;
+    // *next = get_random_piece();
   }
+
 }
 
 void rotate(struct piece* current) {
@@ -135,11 +138,12 @@ int main(int argc, char** argv) {
   gameWindow = newwin(22 + 2, 10 * 2 + 2, 2, 10);
   refresh();
 
+    // srand(time(0));
   struct piece current = get_random_piece();
   struct piece next = get_random_piece();
-
   while (1)  //
   {
+    
     // wclear(gameWindow);
     wborder(gameWindow, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK);
 
@@ -154,7 +158,7 @@ int main(int argc, char** argv) {
         break;
       case KEY_DOWN:
       case 's':
-        moveDown(&current);
+        moveDown(&current, &next);
         break;
       case KEY_RIGHT:
       case 'd':
@@ -169,11 +173,13 @@ int main(int argc, char** argv) {
 
     printGameField(current);
 
-    moveDown(&current);
-    // if (!check_piece_overlap(current)) {
-    // current = next;
+    if (!check_piece_overlap(current)) {
+    current = next;
     // next = get_random_piece();
-    // }
+    }
+
+    moveDown(&current, &next);
+
     wrefresh(gameWindow);
   }  //
 
