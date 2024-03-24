@@ -8,6 +8,9 @@ void initWindow() {
   curs_set(0);
   timeout(300);  // speed
 
+  usleep(100000);
+  srand(time(0));
+
   use_default_colors();
   start_color();
   init_pair(1, COLOR_CYAN, -1);
@@ -41,8 +44,7 @@ int check_piece_overlap(struct piece current) {
       if (tetris[current.piece][current.rotation][y][x] && (
         (current.position.y - y > 21) || (current.position.y - y < 0) ||
         (current.position.x + x < 0) || (current.position.x + x >= 10)
-        // || (gameScreen[current.position.y + 1][current.position.x + x])
-        // || (gameScreen[current.position.y - y][current.position.x + x])
+        || (gameScreen[current.position.y - y][current.position.x + x])
         )
         )
         return 0;
@@ -61,6 +63,7 @@ int removeCurrentPiece(struct piece current) {
 }
 
 int addCurrentPiece(struct piece current) {
+  // removeCurrentPiece(current);
   for (int y = 0; y < 4; ++y) {
     for (int x = 0; x < 4; ++x) {
       if (tetris[current.piece][current.rotation][y][x])
@@ -70,7 +73,7 @@ int addCurrentPiece(struct piece current) {
   }
 }
 
-void printGameField(struct piece current) {
+void printGameField() {
   for (int y = 0; y < 22; y++) {
     for (int x = 0; x < 10; x++) {
       if (gameScreen[y][x]) {
@@ -110,11 +113,13 @@ void moveRight(struct piece* current) {
 void moveDown(struct piece* current, struct piece* next) {
     removeCurrentPiece(*current);
     current->position.y += 1;
-  if (!check_piece_overlap(*current)) {  // check
+  if (!check_piece_overlap(*current)) {
     current->position.y -= 1;
-    // current = next;
-    // *next = get_random_piece();
+    addCurrentPiece(*current);
+    *current = *next;
+    *next = get_random_piece();
   }
+    wrefresh(gameWindow);
 
 }
 
@@ -133,18 +138,35 @@ void rotate(struct piece* current) {
   }
 }
 
+void removeLine(int y) {
+    for (int h = y; h > 2; h--) {
+      for (int x = 0; x < 10; x++) {
+        gameScreen[h][x] = gameScreen[h - 1][x];
+      }
+    }
+}
+
+void checkLine() {
+  int x;
+  for (int y = 0; y < 22; y++) {
+    for (x = 0; x < 10 && gameScreen[y][x]; x++);
+    if (x != 10)
+      continue;
+      removeLine(y);
+  }
+}
+
 int main(int argc, char** argv) {
   initWindow();
   gameWindow = newwin(22 + 2, 10 * 2 + 2, 2, 10);
   refresh();
 
-    // srand(time(0));
   struct piece current = get_random_piece();
   struct piece next = get_random_piece();
+
   while (1)  //
-  {
-    
-    // wclear(gameWindow);
+    {
+    wclear(gameWindow);
     wborder(gameWindow, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK);
 
     switch (getch()) {
@@ -171,14 +193,11 @@ int main(int argc, char** argv) {
 
     addCurrentPiece(current);
 
-    printGameField(current);
-
-    if (!check_piece_overlap(current)) {
-    current = next;
-    // next = get_random_piece();
-    }
+    printGameField();
 
     moveDown(&current, &next);
+
+    checkLine();
 
     wrefresh(gameWindow);
   }  //
