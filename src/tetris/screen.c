@@ -77,3 +77,13 @@ int checkLine() {
   }
   return score * 20 + score / 2 * 100;
 }
+
+// int checkGame(piece current) {
+  
+//   int status = 1;
+//   if (gameScreen[4][4]) {
+//     mvprintw(13, 15, "Game over!!!");
+//     status = 0;
+//   }
+//   return status;
+// }

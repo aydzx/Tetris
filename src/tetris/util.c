@@ -72,8 +72,6 @@ void initWindow() {
   init_pair(5, COLOR_MAGENTA, -1);
   init_pair(6, COLOR_GREEN, -1);
   init_pair(7, COLOR_RED, -1);
-
-  memset(gameScreen, 0, sizeof(gameScreen));
 }
 
 piece get_random_piece(void) {
@@ -103,4 +101,11 @@ int check_piece_overlap(piece current) {
     }
   }
   return 1;
+}
+
+void newGame(int *score, piece *current, piece *next) {
+  memset(gameScreen, 0, sizeof(gameScreen));
+  *current = get_random_piece();
+  *next = get_random_piece();
+  *score = 0;
 }

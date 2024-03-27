@@ -4,14 +4,23 @@
   char gameScreen[22][10];
   const chtype BLOCK = ' ' | A_REVERSE;
 
+
+
 int main() {
+  int score = 0;
+
   initWindow();
   gameWindow = newwin(22 + 2, 10 * 2 + 2, 3, 10);
   gameNextFigure = newwin(6 + 2, 6 * 2 + 1 , 3, 35);
   refresh();
-  struct piece current = get_random_piece();
-  struct piece next = get_random_piece();
-  int score = 0;
+
+  piece current, next;
+
+  newGame(&score, &current, &next);
+
+
+
+
 
   while (1)  //
     {
@@ -36,6 +45,10 @@ int main() {
       case 'd':
         moveRight(&current);
         break;
+      // case 'e':
+      //   while (check_piece_overlap(current))
+      //   moveDown(&current, &next);
+      //   break;
       case 'q':
         return 0;
         break;
@@ -47,11 +60,10 @@ int main() {
     printGameNext(next); // todo
 
     moveDown(&current, &next);
-
     score += checkLine();
-    // score  += 1;
 
     printGameScore(score);
+
 
     wrefresh(gameWindow);
   }  //

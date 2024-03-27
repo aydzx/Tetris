@@ -69,6 +69,8 @@ void printGameScore(int score);
 
 void removeLine(int y);
 int checkLine();
+// int checkGame(piece current);
+void newGame(int *score, piece *current, piece *next);
 
 // move
 void moveLeft(struct piece* current);
