@@ -16,61 +16,12 @@
 #define COLOR_CYAN 6
 #define COLOR_WHITE 7
 
-WINDOW *gameWindow;
-char gameScreen[22][10];
-const chtype BLOCK = ' ' | A_REVERSE;
 
-const char tetris[7][4][4][4] = {
-    {
-        /* I */
-        {{1}, {1}, {1}, {1}},
-        {{1, 1, 1, 1}},
-        {{1}, {1}, {1}, {1}},
-        {{1, 1, 1, 1}},
-    },
-    {
-        /* O */
-        {{1, 1}, {1, 1}, {0}, {0}},
-        {{1, 1}, {1, 1}, {0}, {0}},
-        {{1, 1}, {1, 1}, {0}, {0}},
-        {{1, 1}, {1, 1}, {0}, {0}},
-    },
-    {
-        /* L */
-        {{1, 1}, {1}, {1}, {0}},
-        {{1, 1, 1}, {0, 0, 1}, {0}, {0}},
-        {{0, 1}, {0, 1}, {1, 1}, {0}},
-        {{1}, {1, 1, 1}, {0}, {0}},
-    },
-    {
-        /* J */
-        {{1, 1}, {0, 1}, {0, 1}, {0}},
-        {{0, 0, 1}, {1, 1, 1}, {0}, {0}},
-        {{1}, {1}, {1, 1}, {0}},
-        {{1, 1, 1}, {1}, {0}, {0}},
-    },
-    {
-        /* T */
-        {{0, 1}, {1, 1, 1}, {0}, {0}},
-        {{1}, {1, 1}, {1}, {0}},
-        {{1, 1, 1}, {0, 1}, {0}, {0}},
-        {{0, 1}, {1, 1}, {0, 1}, {0}},
-    },
-    {
-        /* S */
-        {{0, 1}, {1, 1}, {1}, {0}},
-        {{1, 1}, {0, 1, 1}, {0}, {0}},
-        {{0, 1}, {1, 1}, {1}, {0}},
-        {{1, 1}, {0, 1, 1}, {0}, {0}},
-    },
-    {
-        /* Z */
-        {{1}, {1, 1}, {0, 1}, {0}},
-        {{0, 1, 1}, {1, 1}, {0}, {0}},
-        {{1}, {1, 1}, {0, 1}, {0}},
-        {{0, 1, 1}, {1, 1}, {0}, {0}},
-    },
-};
+extern char gameScreen[22][10];
+extern const chtype BLOCK;
+extern const char tetris[7][4][4][4];
+extern WINDOW* gameWindow;
+
 
 enum piece_e {
   PIECE_I,
@@ -95,10 +46,26 @@ struct coordinate {
 };
 
 /* struct that represents one tetris piece in the game */
-struct piece {
+typedef struct piece {
   enum piece_e piece;
   enum rotation rotation;
   struct coordinate position;
-};
+} piece;
+
+void initWindow();
+struct piece get_random_piece(void);
+int check_piece_overlap(struct piece current);
+void removeCurrentPiece(struct piece current);
+void addCurrentPiece(struct piece current);
+void printGameField();
+void removeLine(int y);
+void checkLine();
+
+// move
+void moveLeft(struct piece* current);
+void moveRight(struct piece* current);
+void moveDown(struct piece* current, struct piece* next);
+void rotate(struct piece* current);
+
 
 #endif /* GAME_H */
