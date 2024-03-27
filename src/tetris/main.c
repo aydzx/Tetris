@@ -1,21 +1,23 @@
 #include "game.h"
   WINDOW *gameWindow;
+  WINDOW *gameNextFigure;
   char gameScreen[22][10];
   const chtype BLOCK = ' ' | A_REVERSE;
 
 int main() {
-
   initWindow();
-  gameWindow = newwin(22 + 2, 10 * 2 + 2, 2, 10);
+  gameWindow = newwin(22 + 2, 10 * 2 + 2, 3, 10);
+  gameNextFigure = newwin(6 + 2, 6 * 2 + 1 , 3, 35);
   refresh();
-
   struct piece current = get_random_piece();
   struct piece next = get_random_piece();
+  int score = 0;
 
   while (1)  //
     {
     wclear(gameWindow);
     wborder(gameWindow, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK);
+    wborder(gameNextFigure, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK);
 
     switch (getch()) {
       case KEY_UP:
@@ -42,10 +44,14 @@ int main() {
     addCurrentPiece(current);
 
     printGameField();
+    printGameNext(next); // todo
 
     moveDown(&current, &next);
 
-    checkLine();
+    score += checkLine();
+    // score  += 1;
+
+    printGameScore(score);
 
     wrefresh(gameWindow);
   }  //

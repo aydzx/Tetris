@@ -21,6 +21,7 @@ extern char gameScreen[22][10];
 extern const chtype BLOCK;
 extern const char tetris[7][4][4][4];
 extern WINDOW* gameWindow;
+extern WINDOW* gameNextFigure;
 
 
 enum piece_e {
@@ -41,6 +42,10 @@ enum rotation {
   ROTATION_REVERSE,
 };
 
+// enum scoreCount {
+//  
+// };
+
 struct coordinate {
   short x, y;
 };
@@ -57,9 +62,13 @@ struct piece get_random_piece(void);
 int check_piece_overlap(struct piece current);
 void removeCurrentPiece(struct piece current);
 void addCurrentPiece(struct piece current);
+
 void printGameField();
+void printGameNext(piece next);
+void printGameScore(int score);
+
 void removeLine(int y);
-void checkLine();
+int checkLine();
 
 // move
 void moveLeft(struct piece* current);

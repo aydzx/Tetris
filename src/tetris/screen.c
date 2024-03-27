@@ -36,6 +36,28 @@ void printGameField() {
   wrefresh(gameWindow);
 }
 
+void printGameNext(piece next) {
+  for (int y = 0; y < 4; y++) {
+    for (int x = 0; x < 4; x++) {
+      if (tetris[next.piece][next.rotation][3 - y][x]) {
+        wattron(gameNextFigure, COLOR_PAIR(next.piece + 1));
+        mvwaddch(gameNextFigure, y + 2, x * 2 + 4, BLOCK);
+        mvwaddch(gameNextFigure, y + 2, x * 2 + 5, BLOCK);
+        wattroff(gameNextFigure, COLOR_PAIR(next.piece + 1));
+      } else {
+        mvwaddch(gameNextFigure, y + 2, x * 2 + 4, ' ');
+        mvwaddch(gameNextFigure, y + 2, x * 2 + 5, ' ');
+      }
+    }
+  }
+  wrefresh(gameNextFigure);
+}
+
+void printGameScore(int score) {
+  mvprintw(15, 35,"Score %d", score);
+  mvprintw(16, 35,"Level %d", score / 100);
+}
+
 void removeLine(int y) {
     for (int h = y; h > 2; h--) {
       for (int x = 0; x < 10; x++) {
@@ -44,11 +66,14 @@ void removeLine(int y) {
     }
 }
 
-void checkLine() {
-  int x;
+int checkLine() {
+  int x, score = 0;
   for (int y = 0; y < 22; y++) {
     for (x = 0; x < 10 && gameScreen[y][x]; x++);
-    if (x == 10)
+    if (x == 10) {
       removeLine(y);
+      score++;
+    }
   }
+  return score * 20 + score / 2 * 100;
 }
