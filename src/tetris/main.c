@@ -8,7 +8,7 @@ void initWindow() {
   curs_set(0);
   timeout(300);  // speed
 
-  usleep(100000);
+  // usleep(100000);
   srand(time(0));
 
   use_default_colors();
@@ -53,7 +53,7 @@ int check_piece_overlap(struct piece current) {
   return 1;
 }
 
-int removeCurrentPiece(struct piece current) {
+void removeCurrentPiece(struct piece current) {
   for (int y = 0; y < 4; ++y) {
     for (int x = 0; x < 4; ++x) {
       if (tetris[current.piece][current.rotation][y][x])
@@ -62,8 +62,7 @@ int removeCurrentPiece(struct piece current) {
   }
 }
 
-int addCurrentPiece(struct piece current) {
-  // removeCurrentPiece(current);
+void addCurrentPiece(struct piece current) {
   for (int y = 0; y < 4; ++y) {
     for (int x = 0; x < 4; ++x) {
       if (tetris[current.piece][current.rotation][y][x])
@@ -150,13 +149,12 @@ void checkLine() {
   int x;
   for (int y = 0; y < 22; y++) {
     for (x = 0; x < 10 && gameScreen[y][x]; x++);
-    if (x != 10)
-      continue;
+    if (x == 10)
       removeLine(y);
   }
 }
 
-int main(int argc, char** argv) {
+int main() {
   initWindow();
   gameWindow = newwin(22 + 2, 10 * 2 + 2, 2, 10);
   refresh();

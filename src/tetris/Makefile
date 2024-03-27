@@ -1,4 +1,4 @@
-CC = gcc
+CC = gcc -Wall -Werror -Wextra
 
 all: clean
 	$(CC) main.c -o tetris -lncurses -g && ./tetris
