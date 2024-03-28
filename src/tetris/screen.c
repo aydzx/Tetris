@@ -24,8 +24,8 @@ void printGameField(struct piece *current) {
     for (int x = 0; x < 10; x++) {
       if (current->gameScreen[y][x]) {
         wattron(current->gameWindow, COLOR_PAIR(current->gameScreen[y][x]));
-        mvwaddch(current->gameWindow, y + 1, x * 2 + 1, BLOCK);
-        mvwaddch(current->gameWindow, y + 1, x * 2 + 2, BLOCK);
+        mvwaddch(current->gameWindow, y + 1, x * 2 + 1, current->BLOCK);
+        mvwaddch(current->gameWindow, y + 1, x * 2 + 2, current->BLOCK);
         wattroff(current->gameWindow, COLOR_PAIR(current->gameScreen[y][x]));
       } else {
         mvwaddch(current->gameWindow, y + 1, x * 2 + 1, ' ');
@@ -41,8 +41,8 @@ void printGameNext(struct piece *current, struct piece next) {
     for (int x = 0; x < 4; x++) {
       if (tetris[next.piece][next.rotation][3 - y][x]) {
         wattron(current->gameNextFigure, COLOR_PAIR(next.piece + 1));
-        mvwaddch(current->gameNextFigure, y + 2, x * 2 + 4, BLOCK);
-        mvwaddch(current->gameNextFigure, y + 2, x * 2 + 5, BLOCK);
+        mvwaddch(current->gameNextFigure, y + 2, x * 2 + 4, current->BLOCK);
+        mvwaddch(current->gameNextFigure, y + 2, x * 2 + 5, current->BLOCK);
         wattroff(current->gameNextFigure, COLOR_PAIR(next.piece + 1));
       } else {
         mvwaddch(current->gameNextFigure, y + 2, x * 2 + 4, ' ');

@@ -2,11 +2,13 @@
   // WINDOW *current.gameWindow;
   // WINDOW *current.gameNextFigure;
   // char gameScreen[22][10];
-  const chtype BLOCK = ' ' | A_REVERSE;
+  
 
 
 
 int main() {
+
+  
   int score = 0, isGame = 1;
 
 
@@ -16,7 +18,7 @@ int main() {
 
   newGame(&score, &current, &next);
   initWindow();
-
+  current.BLOCK = ' ' | A_REVERSE;
   current.gameWindow = newwin(22 + 2, 10 * 2 + 2, 0, 10);
   current.gameNextFigure = newwin(6 + 2, 6 * 2 + 1 , 0, 35);
 
@@ -25,9 +27,8 @@ int main() {
   while (isGame)  //
     {
     wclear(current.gameWindow);
-    wborder(current.gameWindow, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK);
-    wborder(current.gameNextFigure, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK);
-
+    wborder(current.gameWindow, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK);
+    wborder(current.gameNextFigure, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK);
     switch (getch()) {
       case KEY_UP:
       case 'w':
@@ -50,9 +51,6 @@ int main() {
       //   moveDown(&current, &next);
       //   break;
       case 'q':
-        // delwin(current.gameWindow);
-  // endwin();
-        // return 0;
         isGame = 0;
         break;
     }
