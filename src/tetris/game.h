@@ -17,11 +17,11 @@
 #define COLOR_WHITE 7
 
 
-extern char gameScreen[22][10];
+// extern char gameScreen[22][10];
 extern const chtype BLOCK;
 extern const char tetris[7][4][4][4];
-extern WINDOW* gameWindow;
-extern WINDOW* gameNextFigure;
+// extern WINDOW* gameWindow;
+// extern WINDOW* gameNextFigure;
 
 
 enum piece_e {
@@ -55,20 +55,23 @@ typedef struct piece {
   enum piece_e piece;
   enum rotation rotation;
   struct coordinate position;
+  char gameScreen[22][10];
+  WINDOW* gameWindow;
+  WINDOW* gameNextFigure;
 } piece;
 
 void initWindow();
 struct piece get_random_piece(void);
-int check_piece_overlap(struct piece current);
-void removeCurrentPiece(struct piece current);
-void addCurrentPiece(struct piece current);
+int check_piece_overlap(struct piece *current);
+void removeCurrentPiece(struct piece *current);
+void addCurrentPiece(struct piece *current);
 
-void printGameField();
-void printGameNext(piece next);
+void printGameField(struct piece *current);
+void printGameNext(struct piece *current,struct piece next);
 void printGameScore(int score);
 
-void removeLine(int y);
-int checkLine();
+void removeLine(struct piece *current, int y);
+int checkLine(struct piece *current);
 // int checkGame(piece current);
 void newGame(int *score, piece *current, piece *next);
 

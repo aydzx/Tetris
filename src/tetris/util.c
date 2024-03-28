@@ -88,13 +88,13 @@ piece get_random_piece(void) {
   return p;
 }
 
-int check_piece_overlap(piece current) {
+int check_piece_overlap(struct piece *current) {
   for (int y = 0; y < 4; y++) {
     for (int x = 0; x < 4; x++) {
-      if (tetris[current.piece][current.rotation][y][x] && (
-        (current.position.y - y > 21) || (current.position.y - y < 0) ||
-        (current.position.x + x < 0) || (current.position.x + x >= 10)
-        || (gameScreen[current.position.y - y][current.position.x + x])
+      if (tetris[current->piece][current->rotation][y][x] && (
+        (current->position.y - y > 21) || (current->position.y - y < 0) ||
+        (current->position.x + x < 0) || (current->position.x + x >= 10)
+        || (current->gameScreen[current->position.y - y][current->position.x + x])
         )
         )
         return 0;
@@ -104,7 +104,7 @@ int check_piece_overlap(piece current) {
 }
 
 void newGame(int *score, piece *current, piece *next) {
-  memset(gameScreen, 0, sizeof(gameScreen));
+  memset(current->gameScreen, 0, sizeof(current->gameScreen));
   *current = get_random_piece();
   *next = get_random_piece();
   *score = 0;

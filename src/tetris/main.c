@@ -1,7 +1,7 @@
 #include "game.h"
-  WINDOW *gameWindow;
-  WINDOW *gameNextFigure;
-  char gameScreen[22][10];
+  // WINDOW *current.gameWindow;
+  // WINDOW *current.gameNextFigure;
+  // char gameScreen[22][10];
   const chtype BLOCK = ' ' | A_REVERSE;
 
 
@@ -9,24 +9,24 @@
 int main() {
   int score = 0;
 
-  initWindow();
-  gameWindow = newwin(22 + 2, 10 * 2 + 2, 3, 10);
-  gameNextFigure = newwin(6 + 2, 6 * 2 + 1 , 3, 35);
+
   refresh();
 
   piece current, next;
 
   newGame(&score, &current, &next);
+  initWindow();
 
-
+  current.gameWindow = newwin(22 + 2, 10 * 2 + 2, 3, 10);
+  current.gameNextFigure = newwin(6 + 2, 6 * 2 + 1 , 3, 35);
 
 
 
   while (1)  //
     {
-    wclear(gameWindow);
-    wborder(gameWindow, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK);
-    wborder(gameNextFigure, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK);
+    wclear(current.gameWindow);
+    wborder(current.gameWindow, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK);
+    wborder(current.gameNextFigure, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK);
 
     switch (getch()) {
       case KEY_UP:
@@ -54,21 +54,21 @@ int main() {
         break;
     }
 
-    addCurrentPiece(current);
+    addCurrentPiece(&current);
 
-    printGameField();
-    printGameNext(next); // todo
+    printGameField(&current);
+    printGameNext(&current,next); // todo
 
     moveDown(&current, &next);
-    score += checkLine();
+    score += checkLine(&current);
 
     printGameScore(score);
 
 
-    wrefresh(gameWindow);
+    wrefresh(current.gameWindow);
   }  //
 
-  delwin(gameWindow);
+  delwin(current.gameWindow);
   endwin();
   return 0;
 }

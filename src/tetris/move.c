@@ -2,9 +2,9 @@
 
 void moveLeft(piece* current) {
   current->position.x -= 1;
-  if (check_piece_overlap(*current)) {
-    removeCurrentPiece(*current);
-    wrefresh(gameWindow);
+  if (check_piece_overlap(current)) {
+    removeCurrentPiece(current);
+    wrefresh(current->gameWindow);
   } else {
     current->position.x += 1;
   }
@@ -12,24 +12,26 @@ void moveLeft(piece* current) {
 
 void moveRight(piece* current) {
   current->position.x += 1;
-  if (check_piece_overlap(*current)) {
-    removeCurrentPiece(*current);
-    wrefresh(gameWindow);
+  if (check_piece_overlap(current)) {
+    removeCurrentPiece(current);
+    wrefresh(current->gameWindow);
   } else {
     current->position.x -= 1;
   }
 }
 
 void moveDown(piece* current, piece* next) {
-    removeCurrentPiece(*current);
+    removeCurrentPiece(current);
     current->position.y += 1;
-  if (!check_piece_overlap(*current)) {
+  if (!check_piece_overlap(current)) {
     current->position.y -= 1;
-    addCurrentPiece(*current);
-    *current = *next;
+    addCurrentPiece(current);
+    current->piece = next->piece;
+    current->rotation = next->rotation;
+    current->position = next->position;
     *next = get_random_piece();
   }
-    wrefresh(gameWindow);
+    wrefresh(current->gameWindow);
 
 }
 
@@ -40,9 +42,9 @@ void rotate(piece* current) {
     current->rotation += 1;
   }
 
-  if (check_piece_overlap(*current)) {
-    removeCurrentPiece(*current);
-    wrefresh(gameWindow);
+  if (check_piece_overlap(current)) {
+    removeCurrentPiece(current);
+    wrefresh(current->gameWindow);
   } else {
     current->rotation -= 1;
   }
