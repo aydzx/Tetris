@@ -7,7 +7,7 @@
 
 
 int main() {
-  int score = 0;
+  int score = 0, isGame = 1;
 
 
   refresh();
@@ -17,12 +17,12 @@ int main() {
   newGame(&score, &current, &next);
   initWindow();
 
-  current.gameWindow = newwin(22 + 2, 10 * 2 + 2, 3, 10);
-  current.gameNextFigure = newwin(6 + 2, 6 * 2 + 1 , 3, 35);
+  current.gameWindow = newwin(22 + 2, 10 * 2 + 2, 0, 10);
+  current.gameNextFigure = newwin(6 + 2, 6 * 2 + 1 , 0, 35);
 
 
 
-  while (1)  //
+  while (isGame)  //
     {
     wclear(current.gameWindow);
     wborder(current.gameWindow, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK, BLOCK);
@@ -50,9 +50,10 @@ int main() {
       //   moveDown(&current, &next);
       //   break;
       case 'q':
-        delwin(current.gameWindow);
-  endwin();
-        return 0;
+        // delwin(current.gameWindow);
+  // endwin();
+        // return 0;
+        isGame = 0;
         break;
     }
 
