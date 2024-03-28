@@ -50,6 +50,8 @@ int main() {
       //   moveDown(&current, &next);
       //   break;
       case 'q':
+        delwin(current.gameWindow);
+  endwin();
         return 0;
         break;
     }
