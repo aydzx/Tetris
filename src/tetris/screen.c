@@ -67,25 +67,16 @@ void removeLine(struct piece *current, int y) {
   }
 }
 
-int checkLine(struct piece *current) {
-  int x, score = 0;
-  for (int y = 0; y < 22; y++) {
-    for (x = 0; x < 10 && current->gameScreen[y][x]; x++)
-      ;
-    if (x == 10) {
-      removeLine(current, y);
-      score++;
-    }
-  }
-  return score * 20 + score / 2 * 100;
+void printBorder(piece* current) {
+    wborder(current->gameWindow, current->BLOCK, current->BLOCK, current->BLOCK,
+            current->BLOCK, current->BLOCK, current->BLOCK, current->BLOCK,
+            current->BLOCK);
+    wborder(current->gameNextFigure, current->BLOCK, current->BLOCK, current->BLOCK,
+            current->BLOCK, current->BLOCK, current->BLOCK, current->BLOCK,
+            current->BLOCK);
 }
 
-// int checkGame(piece current) {
-
-//   int status = 1;
-//   if (current->gameScreen[4][4]) {
-//     mvprintw(13, 15, "Game over!!!");
-//     status = 0;
-//   }
-//   return status;
-// }
+void refreshWindow(piece* current) {
+    removeCurrentPiece(current);
+    wrefresh(current->gameWindow);
+}

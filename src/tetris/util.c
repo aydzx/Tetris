@@ -107,3 +107,26 @@ void newGame(int *score, piece *current, piece *next) {
   *next = get_random_piece();
   *score = 0;
 }
+
+int checkLine(struct piece *current) {
+  int x, score = 0;
+  for (int y = 0; y < 22; y++) {
+    for (x = 0; x < 10 && current->gameScreen[y][x]; x++)
+      ;
+    if (x == 10) {
+      removeLine(current, y);
+      score++;
+    }
+  }
+  return score * 20 + score / 2 * 100;
+}
+
+// int checkGame(piece current) {
+
+//   int status = 1;
+//   if (current->gameScreen[4][4]) {
+//     mvprintw(13, 15, "Game over!!!");
+//     status = 0;
+//   }
+//   return status;
+// }

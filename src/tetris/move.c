@@ -3,8 +3,7 @@
 void moveLeft(piece* current) {
   current->position.x -= 1;
   if (check_piece_overlap(current)) {
-    removeCurrentPiece(current);
-    wrefresh(current->gameWindow);
+    refreshWindow(current);
   } else {
     current->position.x += 1;
   }
@@ -13,8 +12,7 @@ void moveLeft(piece* current) {
 void moveRight(piece* current) {
   current->position.x += 1;
   if (check_piece_overlap(current)) {
-    removeCurrentPiece(current);
-    wrefresh(current->gameWindow);
+    refreshWindow(current);
   } else {
     current->position.x -= 1;
   }
@@ -43,8 +41,7 @@ void rotate(piece* current) {
   }
 
   if (check_piece_overlap(current)) {
-    removeCurrentPiece(current);
-    wrefresh(current->gameWindow);
+    refreshWindow(current);
   } else {
     current->rotation -= 1;
     if(current->position.x - 1 > 0){ //

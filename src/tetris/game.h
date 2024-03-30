@@ -16,7 +16,6 @@
 #define COLOR_CYAN 6
 #define COLOR_WHITE 7
 
-// extern const chtype BLOCK;
 extern const char tetris[7][4][4][4];
 
 enum piece_e {
@@ -36,10 +35,6 @@ enum rotation {
   ROTATION_RIGHT,
   ROTATION_REVERSE,
 };
-
-// enum scoreCount {
-//
-// };
 
 struct coordinate {
   short x, y;
@@ -66,6 +61,8 @@ void addCurrentPiece(struct piece *current);
 void printGameField(struct piece *current);
 void printGameNext(struct piece *current, struct piece next);
 void printGameScore(int score);
+void printBorder(piece* current);
+void refreshWindow(piece* current);
 
 void removeLine(struct piece *current, int y);
 int checkLine(struct piece *current);

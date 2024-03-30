@@ -1,7 +1,8 @@
 CC = gcc -Wall -Werror -Wextra
+TARGETS = main.c util.c screen.c move.c
 
 all: clean
-	$(CC) main.c util.c screen.c move.c -o tetris -lncurses -g && ./tetris
+	$(CC) $(TARGETS) -o tetris -lncurses -g && ./tetris
 
 style:
 	clang-format -n --style=google *.c *.h

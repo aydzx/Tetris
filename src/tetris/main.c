@@ -17,12 +17,7 @@ int main() {
   while (isGame)  //
   {
     wclear(current.gameWindow);
-    wborder(current.gameWindow, current.BLOCK, current.BLOCK, current.BLOCK,
-            current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK,
-            current.BLOCK);
-    wborder(current.gameNextFigure, current.BLOCK, current.BLOCK, current.BLOCK,
-            current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK,
-            current.BLOCK);
+    printBorder(&current);
     switch (getch()) {
       case KEY_UP:
       case 'w':
