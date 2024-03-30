@@ -21,8 +21,9 @@ void moveRight(piece* current) {
 }
 
 void moveDown(piece* current, piece* next) {
-    removeCurrentPiece(current);
-    current->position.y += 1;
+  current->delay = 1000;
+  removeCurrentPiece(current);
+  current->position.y += 1;
   if (!check_piece_overlap(current)) {
     current->position.y -= 1;
     addCurrentPiece(current);
@@ -31,8 +32,7 @@ void moveDown(piece* current, piece* next) {
     current->position = next->position;
     *next = get_random_piece();
   }
-    wrefresh(current->gameWindow);
-
+  wrefresh(current->gameWindow);
 }
 
 void rotate(piece* current) {
@@ -47,5 +47,9 @@ void rotate(piece* current) {
     wrefresh(current->gameWindow);
   } else {
     current->rotation -= 1;
+    if(current->position.x - 1 > 0){ //
+    current->position.x -= 1; // 
+    rotate(current);
+    } //
   }
 }

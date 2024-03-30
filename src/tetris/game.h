@@ -19,7 +19,6 @@
 // extern const chtype BLOCK;
 extern const char tetris[7][4][4][4];
 
-
 enum piece_e {
   PIECE_I,
   PIECE_O,
@@ -39,7 +38,7 @@ enum rotation {
 };
 
 // enum scoreCount {
-//  
+//
 // };
 
 struct coordinate {
@@ -48,12 +47,13 @@ struct coordinate {
 
 /* struct that represents one tetris piece in the game */
 typedef struct piece {
+  int delay;
   enum piece_e piece;
   enum rotation rotation;
   struct coordinate position;
   char gameScreen[22][10];
-  WINDOW* gameWindow;
-  WINDOW* gameNextFigure;
+  WINDOW *gameWindow;
+  WINDOW *gameNextFigure;
   chtype BLOCK;
 } piece;
 
@@ -64,7 +64,7 @@ void removeCurrentPiece(struct piece *current);
 void addCurrentPiece(struct piece *current);
 
 void printGameField(struct piece *current);
-void printGameNext(struct piece *current,struct piece next);
+void printGameNext(struct piece *current, struct piece next);
 void printGameScore(int score);
 
 void removeLine(struct piece *current, int y);
@@ -73,10 +73,9 @@ int checkLine(struct piece *current);
 void newGame(int *score, piece *current, piece *next);
 
 // move
-void moveLeft(struct piece* current);
-void moveRight(struct piece* current);
-void moveDown(struct piece* current, struct piece* next);
-void rotate(struct piece* current);
-
+void moveLeft(struct piece *current);
+void moveRight(struct piece *current);
+void moveDown(struct piece *current, struct piece *next);
+void rotate(struct piece *current);
 
 #endif /* GAME_H */

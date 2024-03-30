@@ -1,34 +1,28 @@
 #include "game.h"
-  // WINDOW *current.gameWindow;
-  // WINDOW *current.gameNextFigure;
-  // char gameScreen[22][10];
-  
-
-
 
 int main() {
-
-  
   int score = 0, isGame = 1;
-
-
-  refresh();
 
   piece current, next;
 
   newGame(&score, &current, &next);
   initWindow();
+  refresh();
+
   current.BLOCK = ' ' | A_REVERSE;
   current.gameWindow = newwin(22 + 2, 10 * 2 + 2, 0, 10);
-  current.gameNextFigure = newwin(6 + 2, 6 * 2 + 1 , 0, 35);
-
-
+  current.gameNextFigure = newwin(6 + 2, 6 * 2 + 1, 0, 35);
+  current.delay = 1000;
 
   while (isGame)  //
-    {
+  {
     wclear(current.gameWindow);
-    wborder(current.gameWindow, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK);
-    wborder(current.gameNextFigure, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK);
+    wborder(current.gameWindow, current.BLOCK, current.BLOCK, current.BLOCK,
+            current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK,
+            current.BLOCK);
+    wborder(current.gameNextFigure, current.BLOCK, current.BLOCK, current.BLOCK,
+            current.BLOCK, current.BLOCK, current.BLOCK, current.BLOCK,
+            current.BLOCK);
     switch (getch()) {
       case KEY_UP:
       case 'w':
@@ -46,10 +40,6 @@ int main() {
       case 'd':
         moveRight(&current);
         break;
-      // case 'e':
-      //   while (check_piece_overlap(current))
-      //   moveDown(&current, &next);
-      //   break;
       case 'q':
         isGame = 0;
         break;
@@ -58,13 +48,14 @@ int main() {
     addCurrentPiece(&current);
 
     printGameField(&current);
-    printGameNext(&current,next); // todo
-
+    printGameNext(&current, next);
+    // current.delay -= 500;
+    // if (!current.delay)
     moveDown(&current, &next);
+
     score += checkLine(&current);
 
     printGameScore(score);
-
 
     wrefresh(current.gameWindow);
   }  //

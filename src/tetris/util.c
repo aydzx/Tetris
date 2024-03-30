@@ -60,7 +60,6 @@ void initWindow() {
   curs_set(0);
   timeout(300);  // speed
 
-  // usleep(100000);
   srand(time(0));
 
   use_default_colors();
@@ -91,12 +90,11 @@ piece get_random_piece(void) {
 int check_piece_overlap(struct piece *current) {
   for (int y = 0; y < 4; y++) {
     for (int x = 0; x < 4; x++) {
-      if (tetris[current->piece][current->rotation][y][x] && (
-        (current->position.y - y > 21) || (current->position.y - y < 0) ||
-        (current->position.x + x < 0) || (current->position.x + x >= 10)
-        || (current->gameScreen[current->position.y - y][current->position.x + x])
-        )
-        )
+      if (tetris[current->piece][current->rotation][y][x] &&
+          ((current->position.y - y > 21) || (current->position.y - y < 0) ||
+           (current->position.x + x < 0) || (current->position.x + x >= 10) ||
+           (current->gameScreen[current->position.y - y]
+                               [current->position.x + x])))
         return 0;
     }
   }
