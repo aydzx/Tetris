@@ -101,11 +101,13 @@ int check_piece_overlap(struct piece *current) {
   return 1;
 }
 
-void newGame(int *score, piece *current, piece *next) {
-  memset(current->gameScreen, 0, sizeof(current->gameScreen));
+void newGame( piece *current, piece *next) {
   *current = get_random_piece();
   *next = get_random_piece();
-  *score = 0;
+  current->isGame = 10;
+  current->score = 0;
+  memset(current->gameScreen, 0, sizeof(current->gameScreen));
+  // *score = 0;
 }
 
 int checkLine(struct piece *current) {
@@ -121,12 +123,9 @@ int checkLine(struct piece *current) {
   return score * 20 + score / 2 * 100;
 }
 
-// int checkGame(piece current) {
-
-//   int status = 1;
-//   if (current->gameScreen[4][4]) {
-//     mvprintw(13, 15, "Game over!!!");
-//     status = 0;
-//   }
-//   return status;
-// }
+void gameOver() {
+  mvprintw(13, 15, "Game over!!!");
+  mvprintw(14, 15, "Restart game?");
+  mvprintw(15,15, "y/n?");
+  refresh();
+}

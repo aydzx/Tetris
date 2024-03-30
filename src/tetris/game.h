@@ -42,6 +42,8 @@ struct coordinate {
 
 /* struct that represents one tetris piece in the game */
 typedef struct piece {
+  int isGame;
+  int score;
   int delay;
   enum piece_e piece;
   enum rotation rotation;
@@ -52,6 +54,12 @@ typedef struct piece {
   chtype BLOCK;
 } piece;
 
+void tetrisGame(piece* current, piece* next);
+
+void deleteGameWindow(piece* current);
+
+void gameOver();
+
 void initWindow();
 struct piece get_random_piece(void);
 int check_piece_overlap(struct piece *current);
@@ -60,14 +68,14 @@ void addCurrentPiece(struct piece *current);
 
 void printGameField(struct piece *current);
 void printGameNext(struct piece *current, struct piece next);
-void printGameScore(int score);
+void printGameScore(piece* current);
 void printBorder(piece* current);
 void refreshWindow(piece* current);
 
 void removeLine(struct piece *current, int y);
 int checkLine(struct piece *current);
 // int checkGame(piece current);
-void newGame(int *score, piece *current, piece *next);
+void newGame(piece *current, piece *next);
 
 // move
 void moveLeft(struct piece *current);

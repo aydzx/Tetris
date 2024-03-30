@@ -10,12 +10,27 @@ void removeCurrentPiece(struct piece *current) {
   }
 }
 
+// void addCurrentPiece(struct piece *current) {
+//   for (int y = 0; y < 4; ++y) {
+//     for (int x = 0; x < 4; ++x) {
+//       if (tetris[current->piece][current->rotation][y][x])
+//         current->gameScreen[current->position.y - y][current->position.x + x] =
+//             current->piece + 1;
+//     }
+//   }
+// }
+
 void addCurrentPiece(struct piece *current) {
   for (int y = 0; y < 4; ++y) {
     for (int x = 0; x < 4; ++x) {
-      if (tetris[current->piece][current->rotation][y][x])
-        current->gameScreen[current->position.y - y][current->position.x + x] =
-            current->piece + 1;
+      if (tetris[current->piece][current->rotation][y][x]) {
+        if(current->gameScreen[3 - y][4 + x] == 1) {
+          current->isGame = 0;
+        } else {
+          current->gameScreen[current->position.y - y][current->position.x + x] =
+              current->piece + 1;
+        }
+      }
     }
   }
 }
@@ -54,9 +69,9 @@ void printGameNext(struct piece *current, struct piece next) {
   wrefresh(current->gameNextFigure);
 }
 
-void printGameScore(int score) {
-  mvprintw(15, 35, "Score %d", score);
-  mvprintw(16, 35, "Level %d", score / 100);
+void printGameScore(piece* current) {
+  mvprintw(15, 35, "Score %d", current->score);
+  mvprintw(16, 35, "Level %d", current->score / 100);
 }
 
 void removeLine(struct piece *current, int y) {

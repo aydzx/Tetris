@@ -44,7 +44,7 @@ void rotate(piece* current) {
     refreshWindow(current);
   } else {
     current->rotation -= 1;
-    if(current->position.x - 1 > 0){ //
+    if(current->position.x - 1 > 0){ // add rottion near border
     current->position.x -= 1; // 
     rotate(current);
     } //
